@@ -1,0 +1,11 @@
+services:
+  we_are_sheep_test_api:  
+    build:
+      context: .
+      args:
+        - PORT=${PORT}
+    container_name: we_are_sheep_test_api
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env

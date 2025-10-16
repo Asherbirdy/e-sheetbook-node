@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  we_are_sheep_local:  
+    build:
+      context: .
+      args:
+        - PORT=${PORT}
+    container_name: we_are_sheep_local
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
