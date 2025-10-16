@@ -7,10 +7,6 @@ import config from './config'
 import DevRouter from './routes/DevRoutes'
 import AuthRoutes from './routes/AuthRoutes'
 import UserRoutes from './routes/UserRoutes'
-import LibraryRoutes from './routes/LibraryRoutes'
-import VocabularyRoutes from './routes/VocabularyRoutes'
-import QuizRoutes from './routes/QuizRoutes'
-import QuizRecordRoutes from './routes/QuizRecordRoutes'
 
 // Plugins
 import cors from 'cors'
@@ -70,10 +66,6 @@ class Server {
     this.app.use(`${ v1 }/dev`, DevRouter)
     this.app.use(`${ v1 }/auth`, AuthRoutes)
     this.app.use(`${ v1 }/users`, UserRoutes)
-    this.app.use(`${ v1 }/library`, LibraryRoutes)
-    this.app.use(`${ v1 }/vocabulary`, VocabularyRoutes)
-    this.app.use(`${ v1 }/quiz`, QuizRoutes)
-    this.app.use(`${ v1 }/quizRecord`, QuizRecordRoutes)
   }
 
   handleErrorAndSafety () {
