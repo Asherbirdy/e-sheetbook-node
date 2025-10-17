@@ -1,14 +1,13 @@
-使用 chrome-mcp-tool
-Fetch api POST
-http://localhost:1210/api/v1/auth/login
+使用 chrome-mcp-tool 做測試
+定義：PORT 為 
+定義：REGISTERED_EMAIL 為 
 
-定義：name 為 .env.test 中的 REGISTERED_NAME
-定義：password 為 .env.test 中的 REGISTERED_PASSWORD
+測試001：
+Fetch POST http://localhost:${PORT}/api/v1/auth/sendOTP
 
 body是
 {
-    "name":"${REGISTERED_NAME}",
-    "password":"${REGISTERED_PASSWORD}"
+    "email":"${REGISTERED_EMAIL}"
 }
 
-看他回傳什麼
+驗證：要回傳錯誤，因為 REGISTERED_EMAIL 已經註冊過了
