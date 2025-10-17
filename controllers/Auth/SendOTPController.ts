@@ -18,16 +18,16 @@ export const SendOTPController = async (req: Req, res: Res) => {
     throw new BadRequestError('EMAIL_ALREADY_EXISTS_IN_USER')
   }
 
-  // Generate OTP
-  const OTP = generateOTP()
-
   // Find or create registration record
   const registerRecord = await Register.findOne({ email })
 
   // If register record not found, create new registration record
   if (!registerRecord) {
-    // Create new registration record
-    await Register.create({ email, OTP })
+    const OTP = generateOTP()
+    await Register.create({
+      email, 
+      OTP
+    })
 
     // Send OTP
     sendOTP(email, OTP)
@@ -36,8 +36,6 @@ export const SendOTPController = async (req: Req, res: Res) => {
     })
     return
   } 
-
-  // if register record found, check if OTP is expired
 
   // Check if blocked
   if (registerRecord.isBlocked) {
@@ -58,9 +56,10 @@ export const SendOTPController = async (req: Req, res: Res) => {
     throw new BadRequestError('MINIMUM_1_MINUTE_GAP_REQUIRED')
   }
 
+  const OTP = generateOTP()
   registerRecord.OTP = OTP
   registerRecord.OTPCreatedTime = currentTime
-  registerRecord.expiresAt = new Date(Date.now() + 15 * 60 * 1000) // Reset expiry to 15 minutes
+  registerRecord.expiresAt = new Date(Date.now() + 15 * 60 * 1000) 
 
   await registerRecord.save()
 
