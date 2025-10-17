@@ -25,8 +25,9 @@ export const SendOTPController = async (req: Req, res: Res) => {
   if (!registerRecord) {
     const OTP = generateOTP()
     await Register.create({
-      email, 
-      OTP
+      email,
+      OTP,
+      OTPCreatedTime: new Date()
     })
 
     // Send OTP
