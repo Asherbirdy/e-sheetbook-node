@@ -6,6 +6,7 @@ node_modules
 .env.test 
 .env.dev_fe
 .env.personal
+.env.mcp.test
 access.log
 error.log
 logs/access/access-*.log
