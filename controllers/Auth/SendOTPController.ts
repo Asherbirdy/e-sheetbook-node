@@ -1,76 +1,72 @@
 import { StatusCodes } from '../../enums'
 import User from '../../models/User'
+import Register from '../../models/Register'
 import { Req, Res } from '../../types'
 import { generateOTP, sendOTP } from '../../utils'
+import { BadRequestError } from '../../errors'
 
 export const SendOTPController = async (req: Req, res: Res) => {
   const { email } = req.body
 
   if (!email) {
-    res.status(StatusCodes.BAD_REQUEST).json({ 
-      errCode: 'EMAIL_REQUIRED',
-      msg: 'Email is required'
-    })
-    return
+    throw new BadRequestError('EMAIL_REQUIRED')
   }
 
-  const isEmailExist = await User.findOne({ email })
-  
-  // 如果 email 已經存在，但不是同個 user，則回傳錯誤
-  if (isEmailExist && String(isEmailExist?._id?.toString()) !== String(req.user?.userId)) {
-    res.status(StatusCodes.BAD_REQUEST).json({ 
-      errCode: 'EMAIL_ALREADY_EXISTS',
-      msg: 'Email already exists'
-    })
-    return
-  }
-  const user = await User.findById(req.user?.userId)
-
-  if (!user) {
-    res.status(StatusCodes.NOT_FOUND).json({ 
-      errCode: 'USER_NOT_FOUND',
-      msg: 'User not found'
-    })
-    return
+  // Check if email already exists in User collection
+  const isEmailExistInUser = await User.findOne({ email })
+  if (isEmailExistInUser) {
+    throw new BadRequestError('EMAIL_ALREADY_EXISTS_IN_USER')
   }
 
-  // If user is blocked, return an error
-  if (user.isBlocked) {
+  // Generate OTP
+  const OTP = generateOTP()
+
+  // Find or create registration record
+  const registerRecord = await Register.findOne({ email })
+
+  // If register record not found, create new registration record
+  if (!registerRecord) {
+    // Create new registration record
+    await Register.create({ email, OTP })
+
+    // Send OTP
+    sendOTP(email, OTP)
+    res.status(StatusCodes.OK).json({
+      msg: 'Register record created successfully'
+    })
+    return
+  } 
+
+  // if register record found, check if OTP is expired
+
+  // Check if blocked
+  if (registerRecord.isBlocked) {
     const currentTime = new Date()
-    if (currentTime < user.blockUntil) {
-      res.status(StatusCodes.FORBIDDEN).json({ 
-        errCode: 'ACCOUNT_BLOCKED',
-        msg: 'Account blocked. Try after some time.'
-      })
-      return
+    if (currentTime < registerRecord.blockUntil) {
+      throw new BadRequestError('TOO_MANY_OTP_REQUESTS')
     } else {
-      user.isBlocked = false
-      user.OTPAttempts = 0
+      registerRecord.isBlocked = false
+      registerRecord.OTPAttempts = 0
     }
   }
 
   // Check for minimum 1-minute gap between OTP requests
-  const lastOTPTime = user.OTPCreatedTime
+  const lastOTPTime = registerRecord.OTPCreatedTime
   const currentTime = new Date()
 
   if (lastOTPTime && currentTime.getTime() - lastOTPTime.getTime() < 60000) {
-    res.status(StatusCodes.BAD_REQUEST).json({ 
-      errCode: 'MINIMUM_1_MINUTE_GAP_REQUIRED',
-      msg: 'Minimum 1-minute gap required between OTP requests'
-    })
-    return
+    throw new BadRequestError('MINIMUM_1_MINUTE_GAP_REQUIRED')
   }
 
-  const OTP = generateOTP()
-  user.OTP = OTP
-  user.OTPCreatedTime = currentTime
-  user.email = email
+  registerRecord.OTP = OTP
+  registerRecord.OTPCreatedTime = currentTime
+  registerRecord.expiresAt = new Date(Date.now() + 15 * 60 * 1000) // Reset expiry to 15 minutes
 
-  await user.save()
+  await registerRecord.save()
 
   sendOTP(email, OTP)
 
-  res.status(StatusCodes.OK).json({ 
-    msg: 'OTP sent successfully'
+  res.status(StatusCodes.OK).json({
+    msg: 'OTP sent successfully to ' + email
   })
 }
