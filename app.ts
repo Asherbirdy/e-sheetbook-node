@@ -7,6 +7,7 @@ import config from './config'
 import DevRouter from './routes/DevRoutes'
 import AuthRoutes from './routes/AuthRoutes'
 import UserRoutes from './routes/UserRoutes'
+import FileRoutes from './routes/FileRoutes'
 
 // Plugins
 import cors from 'cors'
@@ -66,6 +67,7 @@ class Server {
     this.app.use(`${ v1 }/dev`, DevRouter)
     this.app.use(`${ v1 }/auth`, AuthRoutes)
     this.app.use(`${ v1 }/users`, UserRoutes)
+    this.app.use(`${ v1 }/file`, FileRoutes)
   }
 
   handleErrorAndSafety () {

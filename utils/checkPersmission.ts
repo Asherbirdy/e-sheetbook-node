@@ -1,34 +1,16 @@
+import mongoose, { ObjectId } from 'mongoose'
+import { BadRequestError } from '../errors'
 
-interface checkPersmissionPayload {
-  userId: string
-  role?: string
-}
+type checkPersmissionByUserIdPayload = (
+  string |
+  mongoose.Types.ObjectId |
+  ObjectId
+)
 
-export const checkPersmission = (requestUser : any, resourceUserId: checkPersmissionPayload) => {
-  // console.log(requestUser)
-  // console.log(resourceUserId)
-  // console.log(typeof resourceUserId)
-  // console.log(requestUser.userId === resourceUserId.userId)
-  if (requestUser.role === 'dev') return
-  if (requestUser.userId === resourceUserId.userId) return
-
-  throw new Error(
-    'Not authorized to access this route [checkPersmission]'
-  )
-}
-
-export const checkPermissionForDistrict = (
-  requestDistrictId: string,
-  resourceDistrictId: string
+export const checkPersmissionByUserId = (
+  requestUserId: checkPersmissionByUserIdPayload,
+  resourceUserId: checkPersmissionByUserIdPayload
 ) => {
-  if (requestDistrictId === resourceDistrictId) return
-  throw new Error(
-    'Not authorized to access this route'
-  )
-}
-
-export const getUserIdByString = (obj: any) => {
-  return {
-    userId: obj.userId.toString(),
-  }
+  if (requestUserId.toString() === resourceUserId.toString()) return
+  throw new BadRequestError('NOT_AUTHORIZED_USER')
 }
