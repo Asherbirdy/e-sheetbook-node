@@ -16,7 +16,7 @@ body是
 定義：UNREGISTER_OTP 為 
 
 測試001：測試已註冊的 email
-Fetch POST http://localhost:${PORT}/api/v1/auth/register
+Fetch POST http://localhost:${PORT}/api/v1/auth/userRegister
 
 body是
 {
@@ -29,7 +29,7 @@ body是
 驗證：要回傳錯誤，因為 REGISTER_EMAIL 已經註冊過了
 
 測試002：測試未註冊的 email，輸入錯誤的 
-Fetch POST http://localhost:${PORT}/api/v1/auth/register
+Fetch POST http://localhost:${PORT}/api/v1/auth/userRegister
 
 body是
 {
@@ -42,7 +42,7 @@ body是
 驗證：要回傳錯誤，因為 OTP 不正確
 
 測試003：用剛剛註冊的帳號，用正確的 OTP 來註冊
-Fetch POST http://localhost:${PORT}/api/v1/auth/register
+Fetch POST http://localhost:${PORT}/api/v1/auth/userRegister
 
 body是
 {

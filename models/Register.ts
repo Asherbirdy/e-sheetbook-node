@@ -12,8 +12,7 @@ const RegisterSchema: Schema<IRegister> = new mongoose.Schema({
     },
   },
   OTP: {
-    required: [true, 'Please provide OTP'],
-    type: String || undefined,
+    type: String,
   },
   OTPCreatedTime: {
     type: Date || undefined,
