@@ -1,2 +1,4 @@
 export * from './GetAllSheetController'
 export * from './CreateSheetController'
+export * from './EditSheetController'
+export * from './DeleteSheetController'
