@@ -1,11 +1,5 @@
-import mongoose, { Document, Schema } from 'mongoose'
-
-interface ISheet extends Document {
-  name: string;
-  url: string;
-  fileId: mongoose.Schema.Types.ObjectId;
-  userId: mongoose.Schema.Types.ObjectId;
-}
+import mongoose, { Schema } from 'mongoose'
+import { ISheet } from '../types'
 
 const SheetSchema: Schema<ISheet> = new mongoose.Schema({
   name: {
