@@ -20,6 +20,6 @@ const SheetSchema: Schema<ISheet> = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Please provide userId'],
   },
-})
+}, { timestamps: true })
 
 export default mongoose.model<ISheet>('Sheet', SheetSchema)
