@@ -1,8 +1,9 @@
-import { GetAllSheetController, CreateSheetController, EditSheetController, DeleteSheetController } from './Sheet'
+import { GetAllSheetController, CreateSheetController, EditSheetController, DeleteSheetController, GetSheetFromFIleController } from './Sheet'
 
 export const SheetController = {
   getAllSheet: GetAllSheetController,
   createSheet: CreateSheetController,
   editSheet: EditSheetController,
-  deleteSheet: DeleteSheetController
+  deleteSheet: DeleteSheetController,
+  getSheetFromFIle: GetSheetFromFIleController
 }
