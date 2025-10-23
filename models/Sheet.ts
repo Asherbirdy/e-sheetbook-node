@@ -10,6 +10,9 @@ const SheetSchema: Schema<ISheet> = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide url'],
   },
+  api: {
+    type: String,
+  },
   fileId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'File',

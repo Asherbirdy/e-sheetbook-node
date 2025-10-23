@@ -5,7 +5,7 @@ import File from '../../models/File'
 import { BadRequestError } from '../../errors'
 
 export const EditSheetController = async (req: Req, res: Res) => {
-  const { sheetId, fileId, name, url } = req.body
+  const { sheetId, fileId, name, url, api } = req.body
 
   if (!sheetId || !fileId || !name || !url) {
     throw new BadRequestError('PLEASE_PROVIDE_ALL_FIELDS')
@@ -31,7 +31,7 @@ export const EditSheetController = async (req: Req, res: Res) => {
 
   const sheetUpdated = await Sheet.findOneAndUpdate(
     { _id: sheetId },
-    { name, url },
+    { name, url, api },
     { new: true }
   )
 
