@@ -10,7 +10,10 @@ export const GetSheetFromFIleController = async (req: Req, res: Res) => {
     throw new BadRequestError('PLEASE_PROVIDE_FILE_ID')
   }
 
-  const sheets = await Sheet.find({ fileId: fileId, userId: req?.user?.userId })
+  const sheets = await Sheet.find({ 
+    fileId: fileId,
+    userId: req?.user?.userId 
+  }).populate('fileId')
 
   if (!sheets) {
     throw new BadRequestError('SHEETS_NOT_FOUND_OR_NOT_AUTHORIZED')
