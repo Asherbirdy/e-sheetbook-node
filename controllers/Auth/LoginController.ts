@@ -7,12 +7,11 @@ import { attachCookieToResponse, createTokenUser } from '../../utils'
 import { UnauthenticatedError } from '../../errors/unauthenticated'
 
 export const LoginController = async (req: Req, res: Res) => {
-  const { name, password } = req.body
-  if (!name || !password) {
-    res.status(StatusCodes.BAD_REQUEST).json({ msg: '請提供帳號和密碼！' })
-    return
+  const { email, password } = req.body
+  if (!email || !password) {
+    throw new UnauthenticatedError('PLEASE_PROVIDE_EMAIL_AND_PASSWORD')
   }
-  const user = await User.findOne({ name })
+  const user = await User.findOne({ email })
 
   if (!user) {
     throw new UnauthenticatedError('WRONG_NAME_OR_PASSWORD_USER')

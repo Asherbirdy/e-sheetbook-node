@@ -37,6 +37,11 @@ export const attachCookieToResponse = ({ res, user, refreshToken }: any) => {
   const refreshTokenJWT = createJWT({ payload: { user, refreshToken } })
   const oneDay = 1000 * 60 * 60 * 24
 
+  // header 讓他不要 cover 掉 前端的 header cookie
+  if(process.env.AUTH_TOKEN === 'HEADER') {
+    return { accessTokenJWT, refreshTokenJWT }
+  }
+
   res.cookie('accessToken', accessTokenJWT, {
     httpOnly: true,
     secure: config.environment === 'PROD',
