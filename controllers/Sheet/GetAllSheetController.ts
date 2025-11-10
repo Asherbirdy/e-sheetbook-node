@@ -27,7 +27,7 @@ export const GetAllSheetController = async (req: Req, res: Res) => {
 
   // 將 sheets 加入對應的 file
   sheets.forEach((sheet) => {
-    const file = sheet.fileId as string
+    const file = sheet.fileId as any
 
     // 檢查 file 是否存在（可能被刪除或不存在）
     if (!file || !file._id) {
