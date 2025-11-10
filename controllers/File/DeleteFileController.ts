@@ -1,6 +1,7 @@
 import { StatusCodes } from '../../enums'
 import { Req, Res } from '../../types'
 import File from '../../models/File'
+import Sheet from '../../models/Sheet'
 import { BadRequestError } from '../../errors'
 import { checkPersmissionByUserId } from '../../utils'
 
@@ -23,10 +24,13 @@ export const DeleteFileController = async (req: Req, res: Res) => {
 
   checkPersmissionByUserId(req.user.userId, isFileExist.userId)
 
+  // 刪除所有關聯的 Sheet
+  const deletedSheets = await Sheet.deleteMany({ fileId })
   const file = await File.findByIdAndDelete(fileId)
 
   res.status(StatusCodes.OK).json({
     msg: 'DeleteFileController_DELETE',
     deletedFile: file,
+    deletedSheetsCount: deletedSheets.deletedCount,
   })
 }
