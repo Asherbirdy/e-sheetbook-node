@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { SheetController } from '../controllers'
+import { SurveyController } from '../controllers'
 import { authenticateUser } from '../middleware'
 
 const router = Router()
 
-router.post('/create', authenticateUser, SheetController.createSheet)
+router.post('/create', authenticateUser, SurveyController.createSurvey)
 
 export default router
