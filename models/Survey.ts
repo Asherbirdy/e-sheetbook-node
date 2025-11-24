@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 
 interface ISurvey {
   name: string
-  options: string[]
+  options: mongoose.Schema.Types.ObjectId[]
   expiresAt: Date
   userId: mongoose.Schema.Types.ObjectId
 }
@@ -12,10 +12,10 @@ const SurveySchema: Schema<ISurvey> = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide name'],
   },
-  options: {
-    type: [String],
-    required: [true, 'Please provide options'],
-  },
+  options: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SurveyOption',
+  }],
   expiresAt: {
     type: Date,
     required: [true, 'Please provide expiresAt'],
