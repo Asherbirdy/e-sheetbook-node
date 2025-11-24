@@ -8,6 +8,131 @@ This is a Node.js/Express backend application named "sheep-backend" (eSheetBook 
 
 ## Development Commands
 
+## Project Structure
+
+```
+.
+├── AGENT.md                          # AI assistant guidance documentation
+├── CLAUDE.md                         # Claude-specific instructions
+├── GEMINI.md                         # Gemini-specific instructions
+├── README.md                         # Project documentation
+├── Dockerfile                        # Docker container configuration
+├── docker-compose.yml                # Docker compose for development
+├── docker-compose.test.yml           # Docker compose for testing
+├── docker-compose.prod.yml           # Docker compose for production
+├── ecosystem.config.js               # PM2 process manager configuration
+├── package.json                      # Node.js dependencies and scripts
+├── pnpm-lock.yaml                    # PNPM lock file
+├── tsconfig.json                     # TypeScript configuration
+├── tslint.json                       # TSLint configuration
+│
+├── app.ts                            # Main application entry point
+├── config.ts                         # Environment configuration
+│
+├── controllers/                      # Request handlers
+│   ├── Auth/                         # Authentication controllers
+│   │   ├── LoginController.ts
+│   │   ├── UserRegisterController.ts
+│   │   ├── SendOTPController.ts
+│   │   ├── bindOTPEmailController.ts
+│   │   ├── ForgetPasswordEmailOTPController.ts
+│   │   ├── ChangePasswordWithOTPController.ts
+│   │   ├── RefreshTokenController.ts
+│   │   ├── LogoutController.ts
+│   │   └── CheckValidTokenController.ts
+│   ├── User/                         # User management controllers
+│   │   ├── ShowCurrentUserController.ts
+│   │   ├── GetAllUsersController.ts
+│   │   ├── EditUserInfoController.ts
+│   │   ├── UpdatePasswordController.ts
+│   │   ├── ChangeUserAccessController.ts
+│   │   └── EditUserDistrictAndRoleController.ts
+│   ├── File/                         # File management controllers
+│   │   ├── CreateFileController.ts
+│   │   ├── GetFileController.ts
+│   │   ├── EditFileController.ts
+│   │   └── DeleteFileController.ts
+│   ├── Sheet/                        # Sheet management controllers
+│   │   ├── CreateSheetController.ts
+│   │   ├── GetAllSheetController.ts
+│   │   ├── GetSheetFromFIleController.ts
+│   │   ├── EditSheetController.ts
+│   │   └── DeleteSheetController.ts
+│   ├── Survey/                       # Survey management controllers
+│   │   └── CreateSurveyController.ts
+│   ├── Dev/                          # Development utilities controllers
+│   │   ├── CheckIpController.ts
+│   │   └── GetDevEnvController.ts
+│   └── index.ts                      # Controller exports
+│
+├── routes/                           # API route definitions
+│   ├── AuthRoutes.ts                 # /api/v1/auth/*
+│   ├── UserRoutes.ts                 # /api/v1/users/*
+│   ├── FileRoutes.ts                 # /api/v1/file/*
+│   ├── SheetRoutes.ts                # /api/v1/sheet/*
+│   ├── SurveyRoutes.ts               # /api/v1/survey/*
+│   └── DevRoutes.ts                  # /api/v1/dev/*
+│
+├── models/                           # MongoDB schemas
+│   ├── User.ts                       # User model with password hashing
+│   ├── Token.ts                      # Refresh token model
+│   ├── File.ts                       # File model
+│   ├── Sheet.ts                      # Sheet model
+│   ├── Survey.ts                     # Survey model
+│   ├── SurveyOption.ts               # Survey option model (boolean/quantity)
+│   └── Register.ts                   # Registration model
+│
+├── middleware/                       # Express middlewares
+│   ├── authentication.ts             # JWT auth & role-based access control
+│   ├── error-handler.ts              # Centralized error handling
+│   └── index.ts                      # Middleware exports
+│
+├── utils/                            # Utility functions
+│   ├── jwt.ts                        # JWT token utilities
+│   ├── createTokenUser.ts            # Token payload creation
+│   ├── checkPersmission.ts           # Permission checking
+│   ├── emailService.ts               # Email/OTP service
+│   └── index.ts                      # Utils exports
+│
+├── errors/                           # Custom error classes
+│   ├── custom-api.ts                 # Base custom error
+│   ├── bad-request.ts                # 400 Bad Request
+│   ├── unauthenticated.ts            # 401 Unauthorized
+│   ├── not-found.ts                  # 404 Not Found
+│   └── index.ts                      # Error exports
+│
+├── enums/                            # TypeScript enums
+│   ├── Role.ts                       # User roles (ADMIN, USER, etc.)
+│   ├── StatusCodes.ts                # HTTP status codes
+│   └── index.ts                      # Enum exports
+│
+├── types/                            # TypeScript type definitions
+│   ├── commons/                      # Common types
+│   │   ├── ApiTypes.ts               # API request/response types
+│   │   └── UserTypes.ts              # User-related types
+│   ├── models/                       # Model interface types
+│   │   ├── IUser.ts
+│   │   ├── IFile.ts
+│   │   ├── ISheet.ts
+│   │   └── IRegister.ts
+│   └── index.ts                      # Type exports
+│
+├── db/                               # Database connection
+│   └── index.ts                      # MongoDB connection logic
+│
+├── docs/                             # Documentation files
+├── logs/                             # Application logs
+│   ├── access/                       # Access logs
+│   └── error/                        # Error logs
+│
+├── public/                           # Static files
+│   ├── system/                       # General website assets
+│   └── C/                            # SPA assets
+│
+└── postman/                          # API testing
+    └── e-sheetbook.postman_collection.json
+```
+
 ## Architecture
 
 ### Server Structure
@@ -31,6 +156,14 @@ The application uses a class-based Express server (`app.ts`) with the following 
 - Mongoose schemas with TypeScript typing
 - `User.ts`: Includes password hashing pre-save hook and `comparePassword` method
 - `Token.ts`: Manages refresh tokens for JWT authentication
+- `Survey.ts`: Survey model with options reference to SurveyOption
+- `SurveyOption.ts`: Survey option model supporting two types:
+  - `BOOLEAN`: Yes/No options (e.g., "不訂餐")
+  - `QUANTITY`: Quantity-based options (e.g., "雞腿便當", "排骨便當")
+- `Sheet.ts`: Sheet model for managing sheets
+- `File.ts`: File model for file management
+- `Register.ts`: Registration tracking model
+
 
 **Middleware** (`/middleware`):
 - `authentication.ts`: Core authentication logic
