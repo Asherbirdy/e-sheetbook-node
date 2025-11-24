@@ -9,6 +9,7 @@ import AuthRoutes from './routes/AuthRoutes'
 import UserRoutes from './routes/UserRoutes'
 import FileRoutes from './routes/FileRoutes'
 import SheetRoutes from './routes/SheetRoutes'
+import SurveyRoutes from './routes/SurveyRoutes'
 
 // Plugins
 import cors from 'cors'
@@ -24,34 +25,34 @@ import hpp from 'hpp'
 class Server {
   private app: Application
 
-  constructor () {
+  constructor() {
     this.app = express()
     this.middlewares()
     this.routes()
     this.handleErrorAndSafety()
   }
 
-  middlewares () {
+  middlewares() {
     this.app.use(cors())
     this.app.use(express.json())
     this.app.use(cookieParser(config.jwt_secret))
-    
+
     // 設置靜態文件夾為 public/system 用於一般網站
     this.app.use('/system', express.static('public/system'))
     // 設置靜態文件夾為 public/C 用於 SPA
     this.app.use('/C', express.static('public/C'))
-    
+
     this.app.use(
       morgan((tokens, req, res) => [
         tokens.method(req, res),
         tokens.url(req, res),
         tokens.status(req, res),
-        `${ new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }) }`,
-        `ips: ${ req.ips }`,
+        `${new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })}`,
+        `ips: ${req.ips}`,
         'payload:', JSON.stringify(req.body),
       ].join(' ')))
 
-    this.app.set('trust proxy', 1) 
+    this.app.set('trust proxy', 1)
     this.app.use(
       rateLimit({
         windowMs: 15 * 60 * 1000,
@@ -62,37 +63,38 @@ class Server {
 
   }
 
-  routes () {
+  routes() {
     const v1 = '/api/v1'
     // ** v1
-    this.app.use(`${ v1 }/dev`, DevRouter)
-    this.app.use(`${ v1 }/auth`, AuthRoutes)
-    this.app.use(`${ v1 }/users`, UserRoutes)
-    this.app.use(`${ v1 }/file`, FileRoutes)
-    this.app.use(`${ v1 }/sheet`, SheetRoutes)
+    this.app.use(`${v1}/dev`, DevRouter)
+    this.app.use(`${v1}/auth`, AuthRoutes)
+    this.app.use(`${v1}/users`, UserRoutes)
+    this.app.use(`${v1}/file`, FileRoutes)
+    this.app.use(`${v1}/sheet`, SheetRoutes)
+    this.app.use(`${v1}/survey`, SurveyRoutes)
   }
 
-  handleErrorAndSafety () {
+  handleErrorAndSafety() {
     this.app.use(errorHandlerMiddleware)
     this.app.use(helmet())
     this.app.use(mongoSanitize())
     this.app.use(hpp())
   }
 
-  listen () {
+  listen() {
     this.app.listen(config.port, async () => {
-      
-      if(config.environment === 'DEV') {
+
+      if (config.environment === 'DEV') {
         console.table(config)
       }
 
-      if(config.mongodb_url && config.mongodb_db_name) {
+      if (config.mongodb_url && config.mongodb_db_name) {
         await connectDB(
           config.mongodb_url,
           config.mongodb_db_name
         )
       }
-      console.log(`Server up and running at port: ${ config.port }`)
+      console.log(`Server up and running at port: ${config.port}`)
     })
   }
 }
