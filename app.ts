@@ -9,6 +9,7 @@ import AuthRoutes from './routes/AuthRoutes'
 import UserRoutes from './routes/UserRoutes'
 import FileRoutes from './routes/FileRoutes'
 import SheetRoutes from './routes/SheetRoutes'
+import SurveyRoutes from './routes/SurveyRoutes'
 
 // Plugins
 import cors from 'cors'
@@ -70,6 +71,7 @@ class Server {
     this.app.use(`${ v1 }/users`, UserRoutes)
     this.app.use(`${ v1 }/file`, FileRoutes)
     this.app.use(`${ v1 }/sheet`, SheetRoutes)
+    this.app.use(`${ v1 }/survey`, SurveyRoutes)
   }
 
   handleErrorAndSafety () {
