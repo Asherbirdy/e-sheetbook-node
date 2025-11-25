@@ -5,7 +5,8 @@
       "Bash(curl:*)",
       "Bash(mcp list-tools:*)",
       "Bash(lsof:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []
