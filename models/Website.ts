@@ -27,7 +27,6 @@ const SheetFieldSchema: Schema = new Schema({
 
 const WebsiteSchema: Schema = new Schema<IWebsite>(
   {
-    // Sheet configuration
     googleSheetName: {
       type: String,
       default: 'New Sheet!',
@@ -40,7 +39,6 @@ const WebsiteSchema: Schema = new Schema<IWebsite>(
       type: String,
       required: true,
     },
-
     googleSheetStartRow: {
       type: Number,
     },
@@ -67,8 +65,6 @@ const WebsiteSchema: Schema = new Schema<IWebsite>(
     websitePassword: {
       type: String,
     },
-
-    // User reference
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
