@@ -1,2 +1,2 @@
 export { CreateWebsiteController } from './CreateWebsiteController'
-export { EditWebsiteSheetController } from './EditWebsiteSheetController'
+export { EditWebsiteGoogleSheetController } from './EditWebsiteGoogleSheetController'
