@@ -17,5 +17,12 @@ router.put(
   checkVerifiedEmail,
   WebsiteController.editWebsiteSheet
 )
+  
+router.put(
+  '/edit-detail',
+  authenticateUser,
+  checkVerifiedEmail,
+  WebsiteController.editWebsiteDetail
+)
 
 export default router
