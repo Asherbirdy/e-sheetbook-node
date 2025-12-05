@@ -3,25 +3,25 @@ import { Req, Res } from '../../types'
 import Website from '../../models/Website'
 import { BadRequestError } from '../../errors'
 
-export const CreateWebsiteController = async (req: Req, res: Res) => {    
-  const { sheetName, sheetApiUrl, sheetId } = req.body
+export const CreateWebsiteController = async (req: Req, res: Res) => {
+  const { googleSheetName, googleSheetApiUrl, googleSheetId } = req.body
 
-  if (!sheetApiUrl || !sheetId) {
+  if (!googleSheetApiUrl || !googleSheetId) {
     throw new BadRequestError('ALL_FIELDS_REQUIRED')
   }
-  
-  // 创建新的网站记录
+
+  // 創建新的網站記錄
   const newWebsite = new Website({
-    sheetName: sheetName || 'New Sheet!',
-    sheetApiUrl,
-    sheetId,
+    googleSheetName: googleSheetName || 'New Sheet!',
+    googleSheetApiUrl,
+    googleSheetId,
     user: req.user?.userId,
   })
-  
+
   await newWebsite.save()
-  
-  res.status(StatusCodes.CREATED).json({ 
+
+  res.status(StatusCodes.CREATED).json({
     message: 'Website created successfully',
-    website: newWebsite 
+    website: newWebsite
   })
 }

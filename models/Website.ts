@@ -61,7 +61,7 @@ const WebsiteSchema: Schema = new Schema<IWebsite>(
     websiteStatus: {
       type: String,
       enum: ['active', 'inactive'],
-      default: 'active',
+      default: 'inactive',
       required: true,
     },
     websitePassword: {

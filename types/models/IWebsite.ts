@@ -2,11 +2,11 @@ import mongoose from 'mongoose'
 
 export interface IWebsite {
   // Sheet configuration`
-  sheetName: string
-  sheetApiUrl: string
-  sheetId: string
-  sheetStartRow?: number
-  sheetFields?: SheetFieldSchema[]
+  googleSheetName: string
+  googleSheetApiUrl: string
+  googleSheetId: string
+  googleSheetStartRow?: number
+  googleSheetFields?: SheetFieldSchema[]
 
   // Website configuration
   websiteTitle?: string
