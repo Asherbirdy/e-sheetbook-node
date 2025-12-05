@@ -1,9 +1,27 @@
-import { Role, StatusCodes } from '../../enums'
+import { StatusCodes } from '../../enums'
 import { Req, Res } from '../../types'
-import { BadRequestError, NotFoundError } from '../../errors'
 import Website from '../../models/Website'
+import { BadRequestError } from '../../errors'
 
 export const CreateWebsiteController = async (req: Req, res: Res) => {    
-  // TODO: 实现创建网站的逻辑
-  res.status(StatusCodes.OK).json({ message: 'Website created successfully' })
+  const { sheetName, sheetApiUrl, sheetId } = req.body
+
+  if (!sheetApiUrl || !sheetId) {
+    throw new BadRequestError('ALL_FIELDS_REQUIRED')
+  }
+  
+  // 创建新的网站记录
+  const newWebsite = new Website({
+    sheetName: sheetName || 'New Sheet!',
+    sheetApiUrl,
+    sheetId,
+    user: req.user?.userId,
+  })
+  
+  await newWebsite.save()
+  
+  res.status(StatusCodes.CREATED).json({ 
+    message: 'Website created successfully',
+    website: newWebsite 
+  })
 }

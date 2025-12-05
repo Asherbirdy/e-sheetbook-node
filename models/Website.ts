@@ -30,7 +30,7 @@ const WebsiteSchema: Schema = new Schema<IWebsite>(
     // Sheet configuration
     sheetName: {
       type: String,
-      required: true,
+      default: 'New Sheet!',
     },
     sheetApiUrl: {
       type: String,
@@ -40,7 +40,7 @@ const WebsiteSchema: Schema = new Schema<IWebsite>(
       type: String,
       required: true,
     },
-    
+
     sheetStartRow: {
       type: Number,
     },
@@ -72,6 +72,7 @@ const WebsiteSchema: Schema = new Schema<IWebsite>(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
     },
   },
   { timestamps: true }
