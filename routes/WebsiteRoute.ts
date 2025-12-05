@@ -11,4 +11,11 @@ router.post(
   WebsiteController.create
 )
 
+router.put(
+  '/edit-sheet',
+  authenticateUser,
+  checkVerifiedEmail,
+  WebsiteController.editWebsiteSheet
+)
+
 export default router

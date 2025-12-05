@@ -1,5 +1,9 @@
-import { CreateWebsiteController } from './Website'
+import {
+  CreateWebsiteController,
+  EditWebsiteSheetController,
+} from './Website'
 
 export const WebsiteController = {
-  create: CreateWebsiteController
+  create: CreateWebsiteController,
+  editWebsiteSheet: EditWebsiteSheetController,
 }
