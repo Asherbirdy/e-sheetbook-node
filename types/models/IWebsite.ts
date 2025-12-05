@@ -23,5 +23,6 @@ export interface SheetFieldSchema {
   index: number
   name: string
   description: string
-  type: 'text' | 'number' | 'date' | 'boolean';
+  type: 'text' | 'number' | 'date' | 'boolean' | 'blank' | 'select'
+  options?: string[]
 }

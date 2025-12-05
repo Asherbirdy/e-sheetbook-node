@@ -19,6 +19,10 @@ const SheetFieldSchema: Schema = new Schema({
     enum: ['text', 'number', 'date', 'boolean','blank'],
     required: true,
   },
+
+  options: {
+    type: [String],
+  },
 })
 
 const WebsiteSchema: Schema = new Schema<IWebsite>(
