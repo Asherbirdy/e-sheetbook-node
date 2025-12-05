@@ -28,23 +28,23 @@ const SheetFieldSchema: Schema = new Schema({
 const WebsiteSchema: Schema = new Schema<IWebsite>(
   {
     // Sheet configuration
-    sheetName: {
+    googleSheetName: {
       type: String,
       default: 'New Sheet!',
     },
-    sheetApiUrl: {
+    googleSheetApiUrl: {
       type: String,
       required: true,
     },
-    sheetId: {
+    googleSheetId: {
       type: String,
       required: true,
     },
 
-    sheetStartRow: {
+    googleSheetStartRow: {
       type: Number,
     },
-    sheetFields: {
+    googleSheetFields: {
       type: [SheetFieldSchema],
     },
 
