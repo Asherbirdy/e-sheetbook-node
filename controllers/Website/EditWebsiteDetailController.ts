@@ -10,7 +10,8 @@ export const EditWebsiteDetailController = async (req: Req, res: Res) => {
     websiteDescription,
     websiteHtml,
     websiteStatus,
-    websitePassword
+    websitePassword,
+    websiteNeedPassword
   } = req.body
 
   if (!websiteId) {
@@ -50,6 +51,10 @@ export const EditWebsiteDetailController = async (req: Req, res: Res) => {
 
   if (websitePassword !== undefined) {
     website.websitePassword = websitePassword
+  }
+
+  if (websiteNeedPassword !== undefined) {
+    website.websiteNeedPassword = websiteNeedPassword
   }
 
   await website.save()

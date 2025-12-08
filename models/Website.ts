@@ -65,6 +65,10 @@ const WebsiteSchema: Schema = new Schema<IWebsite>(
     websitePassword: {
       type: String,
     },
+    websiteNeedPassword: {
+      type: Boolean,
+      default: false,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

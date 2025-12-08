@@ -14,6 +14,7 @@ export interface IWebsite {
   websiteHtml?: string
   websiteStatus: 'active' | 'inactive'
   websitePassword?: string
+  websiteNeedPassword: boolean
   
   // User reference
   user?: mongoose.Types.ObjectId  
