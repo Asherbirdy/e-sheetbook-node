@@ -3,3 +3,4 @@ export { EditWebsiteGoogleSheetController } from './EditWebsiteGoogleSheetContro
 export { EditWebsiteDetailController } from './EditWebsiteDetailController'
 export { DeleteWebsiteController } from './DeleteWebsiteController'
 export { GetAllWebsiteController } from './GetAllWebsiteController'
+export { GetWebsiteDetailByIdController } from './GetWebsiteDetailByIdController'

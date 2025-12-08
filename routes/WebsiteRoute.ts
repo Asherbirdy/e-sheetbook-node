@@ -39,4 +39,11 @@ router.get(
   WebsiteController.getAll
 )
 
+router.get(
+  '/byId',
+  authenticateUser,
+  checkVerifiedEmail,
+  WebsiteController.getWebsiteById
+)
+
 export default router
