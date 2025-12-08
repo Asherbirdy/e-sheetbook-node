@@ -25,6 +25,18 @@ router.put(
   WebsiteController.editWebsiteDetail
 )
 
-router.delete('/delete', authenticateUser, checkVerifiedEmail, WebsiteController.delete)
+router.delete(
+  '/delete',
+  authenticateUser,
+  checkVerifiedEmail,
+  WebsiteController.delete
+)
+
+router.get(
+  '/all',
+  authenticateUser,
+  checkVerifiedEmail, 
+  WebsiteController.getAll
+)
 
 export default router

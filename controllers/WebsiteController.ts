@@ -2,12 +2,14 @@ import {
   CreateWebsiteController,
   EditWebsiteGoogleSheetController,
   EditWebsiteDetailController,
-  DeleteWebsiteController
+  DeleteWebsiteController,
+  GetAllWebsiteController
 } from './Website'
 
 export const WebsiteController = {
   create: CreateWebsiteController,
   editWebsiteSheet: EditWebsiteGoogleSheetController,
   editWebsiteDetail: EditWebsiteDetailController,
-  delete: DeleteWebsiteController
+  delete: DeleteWebsiteController,
+  getAll: GetAllWebsiteController
 }
