@@ -10,8 +10,6 @@ export const EditWebsiteGoogleSheetController = async (req: Req, res: Res) => {
     !websiteId ||
     !googleSheetApiUrl ||
     !googleSheetId ||
-    !googleSheetStartRow ||
-    !googleSheetFields ||
     !googleSheetName
   ) {
     throw new BadRequestError('ALL_FIELDS_REQUIRED')
