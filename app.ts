@@ -10,6 +10,7 @@ import UserRoutes from './routes/UserRoutes'
 import FileRoutes from './routes/FileRoutes'
 import SheetRoutes from './routes/SheetRoutes'
 import WebsiteRoute from './routes/WebsiteRoute'
+import DailyPostGroupRoute from './routes/DailyPostGroup'
 
 // Plugins
 import cors from 'cors'
@@ -72,6 +73,7 @@ class Server {
     this.app.use(`${ v1 }/file`, FileRoutes)
     this.app.use(`${ v1 }/sheet`, SheetRoutes)
     this.app.use(`${ v1 }/website`, WebsiteRoute)
+    this.app.use(`${ v1 }/dailyPostGroup`, DailyPostGroupRoute)
   }
 
   handleErrorAndSafety () {
